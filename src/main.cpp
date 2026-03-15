@@ -5,15 +5,6 @@
 #include <vector>
 
 // SI to CGS - CGS to SI
-/*
-  Length (l) : CGS (cm) - SI (m) - 10e2
-  Mass (m) : CGS (g) - SI (kg) - 10e3
-  Time (t) : CGS (s) - SI (s) - 1
-  Force (F) : CGS (dyn) - SI (N) - 10e5
-  Energy, Work (E, A) - CGS (erg) - SI (J) - 10e7
-  Power (P) : CGS (Erg/s) - SI (W) - 10e7
-  Pressure (p) : CGS (dyn/cm^2) - SI (Pa) - 10
-*/
 
 double input_user_value() {
   double value;
@@ -86,9 +77,9 @@ int main() {
     std::string converted_value;
 
     if (system == 1) {
-      converted_value = convert(quantity, value, quantities, true);
+      converted_value = quantities[quantity - 1].convert(value, true);
     } else {
-      converted_value = convert(quantity, value, quantities, false);
+      converted_value = quantities[quantity - 1].convert(value, false);
     }
     std::cout << "Converted value: " << converted_value << std::endl;
 

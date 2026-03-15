@@ -1,7 +1,7 @@
 #pragma once
 
+#include <format>
 #include <string>
-#include <vector>
 #include <utility>
 
 struct UnitSystem {
@@ -18,6 +18,13 @@ struct Quantity {
   
   Quantity(std::string n, double cf, std::string c, std::string s) 
     : name(n), conversion_factor(cf), cgs(std::move(c)), si(std::move(s)) {}
-};
 
-std::string convert(int quantity, double value, std::vector<Quantity>& quantities, bool cgs_to_si);
+  std::string convert(double value, bool cgs_to_si) {
+    double converted_value;
+    if (cgs_to_si) converted_value = value / conversion_factor;
+    else converted_value = value * conversion_factor;
+
+    return (std::format("{:.2f}", converted_value) + " " + 
+      (cgs_to_si ? si.unit_name : cgs.unit_name));
+  }
+};
