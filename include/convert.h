@@ -24,12 +24,12 @@ public:
   Quantity(std::string n, double cf, std::string c, std::string s)
       : name(n), conversion_factor(cf), cgs(std::move(c)), si(std::move(s)) {}
 
-  std::string convert(double value, Direction &direction) {
+  std::string convert(double value, const Direction& direction) {
     double converted_value;
-    if (direction == CGS_TO_SI) converted_value = value / conversion_factor;
+    if (direction == Direction::CGS_TO_SI) converted_value = value / conversion_factor;
     else converted_value = value * conversion_factor;
 
     return (std::format("{:.2f}", converted_value) + " " +
-            (direction == CGS_TO_SI ? si.unit_name : cgs.unit_name));
+            (direction == Direction::CGS_TO_SI ? si.unit_name : cgs.unit_name));
   }
 };

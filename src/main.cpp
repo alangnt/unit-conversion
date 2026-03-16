@@ -1,5 +1,6 @@
 #include <convert.h>
 #include <iostream>
+#include <vector>
 
 // SI to CGS - CGS to SI
 
@@ -16,7 +17,6 @@ double input_user_value() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     std::cout << "Your answer should be over 0, try again." << std::endl;
-    std::cout << "Enter a value: ";
   }
 
   return value;
@@ -74,9 +74,9 @@ int main() {
     std::string converted_value;
 
     if (system == 1) {
-      converted_value = quantities[quantity - 1].convert(value, CGS_TO_SI);
+      converted_value = quantities[quantity - 1].convert(value, Quantity::Direction::CGS_TO_SI);
     } else {
-      converted_value = quantities[quantity - 1].convert(value, SI_TO_CGS);
+      converted_value = quantities[quantity - 1].convert(value, Quantity::Direction::SI_TO_CGS);
     }
     std::cout << "Converted value: " << converted_value << std::endl;
 
