@@ -15,7 +15,7 @@ private:
   double conversion_factor;
 
 public:
-  enum Direction { CGS_TO_SI, SI_TO_CGS };
+  enum class Direction { CGS_TO_SI, SI_TO_CGS };
 
   std::string name;
   UnitSystem cgs;

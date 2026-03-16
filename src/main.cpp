@@ -74,9 +74,9 @@ int main() {
     std::string converted_value;
 
     if (system == 1) {
-      converted_value = quantities[quantity - 1].convert(value, true);
+      converted_value = quantities[quantity - 1].convert(value, CGS_TO_SI);
     } else {
-      converted_value = quantities[quantity - 1].convert(value, false);
+      converted_value = quantities[quantity - 1].convert(value, SI_TO_CGS);
     }
     std::cout << "Converted value: " << converted_value << std::endl;
 
