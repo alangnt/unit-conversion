@@ -61,10 +61,10 @@ int main() {
 
     std::cout << "Select what do you want to convert:" << std::endl;
     for (int i = 0; i < quantities.size(); i++) {
-      std::cout << i + 1 << ". " << quantities[i].name 
+      std::cout << i + 1 << ". " << quantities[i].getName() 
         << std::format(" ({})", 
-          (system == 1 ? quantities[i].cgs.unit_name + " -> " + quantities[i].si.unit_name 
-            : quantities[i].si.unit_name + " -> " + quantities[i].cgs.unit_name)) << std::endl;
+          (system == 1 ? quantities[i].getCgs().unit_name + " -> " + quantities[i].getSi().unit_name 
+            : quantities[i].getSi().unit_name + " -> " + quantities[i].getCgs().unit_name)) << std::endl;
     }
 
     int quantity = input_user_choice(quantities.size());
