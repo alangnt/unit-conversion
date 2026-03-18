@@ -7,17 +7,15 @@
 
 double input_user_value() {
   double value;
+  std::cout << "Enter a value: ";
 
-  while (true) {
-    std::cout << "Enter a value: ";
-    std::cin >> value;
-    if (value > 0) {
-      break;
-    }
+  while (!(std::cin >> value) || value <= 0) {
+    std::cout << "Your answer should be over 0, try again." << std::endl;
+
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    std::cout << "Your answer should be over 0, try again." << std::endl;
+    std::cout << "Enter a value: ";
   }
 
   return value;
@@ -25,18 +23,14 @@ double input_user_value() {
 
 int input_user_choice(int choicesSize) {
   int choice;
+  std::cout << "Enter a value (1-" << choicesSize << "): ";
 
-  while (true) {
-    std::cout << "Enter a value (1-" << choicesSize << "): ";
-    std::cin >> choice;
-    // if max, checks if > min and <= max otherwies only checks if > min
-    if (choice > 0 && choice <= choicesSize) {
-      break;
-    }
+  while (!(std::cin >> choice) || choice <= 0 || choice > 7) {
+    std::cout << "Your answer should be 1-" << choicesSize << ", try again." << std::endl;
+
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    std::cout << "Your answer should be 1-" << choicesSize << ", try again." << std::endl;
     std::cout << "Enter a value: ";
   }
 
