@@ -1,15 +1,34 @@
 #include "convert.h"
 #include <iostream>
+#include <format>
 #include <limits>
+#include <optional>
+#include <variant>
 #include <vector>
 
 // SI to CGS - CGS to SI
 
-double input_user_value() {
-  double value;
+std::variant<int, double>input_user(std::variant<int, double> value, std::optional<int> const& choicesSize) {  
+  // Case it's an int - requests a choice
+  if (std::holds_alternative<int>(value) && choicesSize.has_value()) {
+    std::cout << "Enter a value (1-" << choicesSize.value() << "): ";
+
+    while (!(std::cin >> std::get<int>(value)) || std::get<int>(value) <= 0 || std::get<int>(value) > 7) {
+      std::cout << "Your answer should be 1-" << choicesSize.value() << ", try again." << std::endl;
+
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+      std::cout << "Enter a value: ";
+    }
+
+    return value;
+  }
+
+  // Case it's a double - requests a value
   std::cout << "Enter a value: ";
 
-  while (!(std::cin >> value) || value <= 0) {
+  while (!(std::cin >> std::get<double>(value)) || std::get<double>(value) <= 0.0) {
     std::cout << "Your answer should be over 0, try again." << std::endl;
 
     std::cin.clear();
@@ -19,22 +38,6 @@ double input_user_value() {
   }
 
   return value;
-}
-
-int input_user_choice(int choicesSize) {
-  int choice;
-  std::cout << "Enter a value (1-" << choicesSize << "): ";
-
-  while (!(std::cin >> choice) || choice <= 0 || choice > 7) {
-    std::cout << "Your answer should be 1-" << choicesSize << ", try again." << std::endl;
-
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-    std::cout << "Enter a value: ";
-  }
-
-  return choice;
 }
 
 int main() {
@@ -52,7 +55,9 @@ int main() {
     std::cout << "1. CGS -> SI" << std::endl;
     std::cout << "2. SI -> CGS" << std::endl;
 
-    int system = input_user_choice(2);
+    int system;
+    std::variant<int, double> get_system = input_user(system, 2);
+    system = std::get<int>(get_system);
 
     std::cout << "Select what do you want to convert:" << std::endl;
     for (int i = 0; i < quantities.size(); i++) {
@@ -62,9 +67,13 @@ int main() {
             : quantities[i].getSi().unit_name + " -> " + quantities[i].getCgs().unit_name)) << std::endl;
     }
 
-    int quantity = input_user_choice(quantities.size());
+    int quantity;
+    std::variant<int, double> get_quantity = input_user(quantity, quantities.size());
+    quantity = std::get<int>(get_quantity);
 
-    double value = input_user_value();
+    double value;
+    std::variant<int, double> get_value = input_user(value, std::nullopt);
+    value = std::get<double>(get_value);
 
     std::string converted_value;
 
